@@ -7,8 +7,8 @@
 <body>
   <h1>
     Votes:
-    <% vote_terms.each do |term| %>
-      <span data-vote-for='<%= term.downcase %>'>0</span>
+    <% vote_terms.each do |term, current_value| %>
+      <span data-vote-for='<%= term.downcase %>'><%= current_value %></span>
       for <%= term %>
     <% end %>
   </h1>

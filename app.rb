@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'rack/ssl'
 require 'pusher'
+require_relative 'lib/vote_persistence'
 
 configure :development do
   require 'dotenv/load'
@@ -20,8 +21,12 @@ configure do
 end
 
 get '/' do
+  terms = ENV.fetch('TWITTER_STREAM_VOTE_TERMS').split(',').map(&:strip).each_with_object({}) { |term, hash|
+    hash[term] = VotePersistence.read(term)
+  }
+
   erb :index, locals: {
-    vote_terms: ENV.fetch('TWITTER_STREAM_VOTE_TERMS').split(',').map(&:strip),
+    vote_terms: terms,
     pusher_key: Pusher.key
   }
 end

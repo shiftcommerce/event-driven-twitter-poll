@@ -67,6 +67,9 @@
   "addons": [
     {
       "plan": "pusher:sandbox"
+    },
+    {
+      "plan": "memcachedcloud:30"
     }
   ]
 }

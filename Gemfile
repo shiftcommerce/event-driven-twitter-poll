@@ -24,5 +24,8 @@ gem 'rack-ssl'
 # a concurrent Ruby webserver
 gem 'puma'
 
+# Memcached library for persisting votes
+gem 'dalli'
+
 # load .env locally in development
 gem 'dotenv', group: :development
