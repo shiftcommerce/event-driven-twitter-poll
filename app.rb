@@ -1,6 +1,7 @@
 require 'dotenv/load'
 require 'sinatra'
 require 'rack/ssl'
+require 'pusher'
 
 configure :production do
   # enforce HTTPS in production
@@ -17,6 +18,7 @@ end
 
 get '/' do
   erb :index, locals: {
-    vote_terms: ENV.fetch('TWITTER_STREAM_VOTE_TERMS').split(',').map(&:strip)
+    vote_terms: ENV.fetch('TWITTER_STREAM_VOTE_TERMS').split(',').map(&:strip),
+    pusher_key: Pusher.key
   }
 end

@@ -18,7 +18,7 @@
   <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
   <script>
     // create a Pusher configuration
-    var pusher = new Pusher('<%= ENV.fetch('PUSHER_APP_KEY') %>', {
+    var pusher = new Pusher('<%= pusher_key %>', {
       cluster: 'eu',
       encrypted: true
     });
