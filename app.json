@@ -1,0 +1,72 @@
+{
+  "name": "event-driven-twitter-poll",
+  "description": "A live Twitter poll, driven by streaming tweets through Kafka",
+  "keywords": [
+    "sinatra",
+    "ruby",
+    "kafka",
+    "twitter"
+  ],
+  "website": "https://www.shiftcommerce.com/",
+  "repository": "https://github.com/shiftcommerce/event-driven-twitter-poll",
+  "success_url": "/",
+  "stack": "heroku-16",
+  "image": "heroku/ruby",
+  "env": {
+    "TWITTER_STREAM_VOTE_TERMS": {
+      "description": "The terms that count as votes, comma separated.",
+      "value": "Apple,Android",
+      "required": true
+    },
+    "TWITTER_STREAM_SEARCH_TERM": {
+      "description": "The term to monitor for votes in Twitter.",
+      "value": "@ryantownsend",
+      "required": true
+    },
+    "TWITTER_CONSUMER_KEY": {
+      "description": "Your Twitter app's consumer key.",
+      "required": true
+    },
+    "TWITTER_CONSUMER_SECRET": {
+      "description": "Your Twitter app's consumer secret.",
+      "required": true
+    },
+    "TWITTER_ACCESS_TOKEN": {
+      "description": "Your Twitter app's access token.",
+      "required": true
+    },
+    "TWITTER_ACCESS_TOKEN_SECRET": {
+      "description": "Your Twitter app's token secret.",
+      "required": true
+    },
+    "WEB_CONCURRENCY": {
+      "description": "The number of Puma web processes.",
+      "value": "2"
+    },
+    "WEB_THREADS": {
+      "description": "The number of Puma web threads.",
+      "value": "5"
+    },
+    "RACK_ENV": {
+      "description": "The Rack environment to use.",
+      "value": "production"
+    }
+  },
+  "formation": [
+    {
+      "process": "web",
+      "quantity": 1,
+      "size": "hobby"
+    },
+    {
+      "process": "twitter_consumer",
+      "quantity": 1,
+      "size": "hobby"
+    }
+  ],
+  "addons": [
+    {
+      "plan": "pusher:sandbox"
+    }
+  ]
+}
