@@ -1,7 +1,8 @@
 require 'oj'
 require 'pusher'
+require_relative 'vote_persistence'
 
-class VoteProcessor
+class VoteHandler
 
   def process(message)
     value = Oj.load(message.value)

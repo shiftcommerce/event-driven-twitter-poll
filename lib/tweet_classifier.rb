@@ -19,7 +19,7 @@ class TweetClassifier
     if matches.size == 1
       # process their vote
       json = Oj.dump(value.merge(vote_for: matches.first))
-      VoteProcessor.new.process FakeKafkaMessage.new(json)
+      VoteHandler.new.process FakeKafkaMessage.new(json)
     end
   end
 end
