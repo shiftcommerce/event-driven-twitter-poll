@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+  <title>Pusher Test</title>
+  <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
+  <script>
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('da6bdcc0f067b82f0850', {
+      cluster: 'eu',
+      encrypted: true
+    });
+
+    var channel = pusher.subscribe('votes');
+
+    channel.bind('vote', function handleMessage(value) {
+      var counter = document.querySelector(`[data-vote-for='${value.vote_for.toLowerCase()}']`);
+      if (counter) counter.innerHTML = value.absolute;
+
+      var votes_display = document.getElementById('votes');
+      var vote_element = document.createElement('p');
+      vote_element.innerHTML = `<p>@${value.screen_name} voted for ${value.vote_for}</p>`;
+      votes_display.appendChild(vote_element);
+    });
+  </script>
+</head>
+
+<body>
+  <h1>Votes: <span data-vote-for='apple'>0</span> for Apple, <span data-vote-for='android'>0</span> for Android</h1>
+
+  <div id='votes'></div>
+</body>
+
+</html>
