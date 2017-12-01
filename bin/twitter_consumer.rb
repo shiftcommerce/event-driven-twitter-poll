@@ -1,4 +1,7 @@
-require 'dotenv/load'
+unless 'production' == ENV['RACK_ENV']
+  require 'dotenv/load'
+end
+
 require 'twitter'
 require 'oj'
 require_relative '../lib/tweet_handler'

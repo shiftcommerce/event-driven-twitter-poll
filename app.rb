@@ -1,7 +1,10 @@
-require 'dotenv/load'
 require 'sinatra'
 require 'rack/ssl'
 require 'pusher'
+
+configure :development do
+  require 'dotenv/load'
+end
 
 configure :production do
   # enforce HTTPS in production

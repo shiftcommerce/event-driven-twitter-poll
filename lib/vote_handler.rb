@@ -1,4 +1,3 @@
-require 'dotenv/load'
 require 'oj'
 require 'pusher'
 
