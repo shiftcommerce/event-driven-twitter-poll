@@ -1,3 +1,5 @@
+require 'dalli'
+
 module VotePersistence
   # increment vote count
   def self.increment(key)
