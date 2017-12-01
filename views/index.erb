@@ -35,7 +35,10 @@
       // add the message
       var votes_display = document.getElementById('votes');
       var vote_element = document.createElement('p');
-      vote_element.innerHTML = `<p>@${value.screen_name} voted for ${value.vote_for}</p>`;
+      vote_element.innerHTML = `<p>
+        @${value.screen_name} voted for ${value.vote_for} with message:<br />
+        <em>${value.text}</em>
+      </p>`;
       votes_display.appendChild(vote_element);
     });
   </script>
