@@ -5,7 +5,13 @@
 </head>
 
 <body>
-  <h1>Votes: <span data-vote-for='apple'>0</span> for Apple, <span data-vote-for='android'>0</span> for Android</h1>
+  <h1>
+    Votes:
+    <% vote_terms.each do |term| %>
+      <span data-vote-for='<%= term.downcase %>'>0</span>
+      for <%= term %>
+    <% end %>
+  </h1>
 
   <div id='votes'></div>
 

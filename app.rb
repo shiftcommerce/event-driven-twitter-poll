@@ -16,5 +16,7 @@ configure do
 end
 
 get '/' do
-  erb :index
+  erb :index, locals: {
+    vote_terms: ENV.fetch('TWITTER_STREAM_VOTE_TERMS').split(',').map(&:strip)
+  }
 end
