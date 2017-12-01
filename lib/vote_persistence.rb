@@ -12,7 +12,10 @@ module VotePersistence
   end
 
   def self.client
-    @client ||= Dalli::Client.new(ENV.fetch('MEMCACHEDCLOUD_SERVERS'))
+    @client ||= Dalli::Client.new(ENV.fetch('MEMCACHEDCLOUD_SERVERS'), {
+      username: ENV.fetch('MEMCACHEDCLOUD_USERNAME'),
+      password: ENV.fetch('MEMCACHEDCLOUD_PASSWORD')
+    })
   rescue KeyError => ex
     raise RuntimeError, 'ERROR: MEMCACHEDCLOUD_SERVERS is missing, Memcache is not configured.'
   end
