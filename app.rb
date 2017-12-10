@@ -1,11 +1,8 @@
+require 'dotenv/load' unless 'production' == ENV['RACK_ENV']
 require 'sinatra'
 require 'rack/ssl'
 require 'pusher'
-require_relative 'lib/vote_persistence'
-
-configure :development do
-  require 'dotenv/load'
-end
+require_relative 'models/candidate'
 
 configure :production do
   # enforce HTTPS in production
@@ -21,12 +18,12 @@ configure do
 end
 
 get '/' do
-  terms = ENV.fetch('TWITTER_STREAM_VOTE_TERMS').split(',').map(&:strip).each_with_object({}) { |term, hash|
-    hash[term] = VotePersistence.read(term)
-  }
+  candidate_keys = ENV.fetch('TWITTER_STREAM_VOTE_TERMS').split(',')
 
   erb :index, locals: {
-    vote_terms: terms,
+    term: ENV.fetch('TWITTER_STREAM_SEARCH_TERM'),
+    candidate_keys: candidate_keys,
+    candidates: Candidate.where(key: candidate_keys.map(&:downcase)),
     pusher_key: Pusher.key
   }
 end

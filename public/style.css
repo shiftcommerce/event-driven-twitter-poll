@@ -1,0 +1,123 @@
+* {
+  margin:0;
+  padding:0;
+  border:0;
+  font-size:inherit;
+  font-weight:normal;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
+  @media (min-width: 375px) {
+    html {
+      font-size: 20px;
+    }
+  }
+
+body {
+  background: #F2F2F2;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-size: 1rem;
+}
+
+.c-navbar {
+  margin-bottom: 1rem;
+  text-align: center;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+
+  background: #fff;
+  color: #431347;
+}
+
+.c-instructions {
+  margin-bottom: 2rem;
+  text-align: center;
+  color: #431347;
+}
+  .c-instructions__highlight {
+    font-weight: bold;
+    color: #C802AD;
+  }
+
+.c-results {
+  position: relative;
+}
+  .c-results__chart {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .c-results__label {
+    position: absolute;
+    top: 50%;
+    color: #431347;
+    margin-top: -2vw;
+    font-size: 4vw;
+  }
+  .c-results__label--0 { right: 1rem }
+  .c-results__label--1 { left: 1rem }
+
+.c-pie-chart {
+  max-width: 50vw;
+  display: block;
+
+  background: #431347;
+  border-radius: 50%;
+  overflow: hidden;
+  transform: rotate(-90deg);
+}
+  .c-pie-chart__slice {
+    stroke: #C802AD;
+    transition: stroke-dasharray 0.5s ease;
+    stroke-dasharray: 78.5398 157.0796;
+  }
+
+.c-footer {
+  height: calc(8rem + 90px);
+
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  padding-top: 20px;
+  padding-bottom: 70px;
+
+  background: #27282E url('/logo.svg') center bottom 20px no-repeat no-repeat;
+  background-size: auto 30px;
+  color: #fff;
+}
+
+.c-vote-ticker {
+  height: 8rem;
+  overflow: visible;
+}
+  @keyframes expandTweet {
+    0%   { height: 0 }
+    100% { height: 1.5rem }
+  }
+  .c-vote-ticker__tweet {
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+
+    white-space: nowrap;
+    text-align: center;
+    line-height: 1.5;
+    color: #fff;
+
+    will-change: height, opacity;
+
+    animation-name: expandTweet;
+    animation-duration: 0.2s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+  }
+    .c-vote-ticker__tweet:nth-child(1) { opacity: 1.00; }
+    .c-vote-ticker__tweet:nth-child(2) { opacity: 0.75; }
+    .c-vote-ticker__tweet:nth-child(3) { opacity: 0.50; }
+    .c-vote-ticker__tweet:nth-child(4) { opacity: 0.25; }
+    .c-vote-ticker__tweet:nth-child(-n+6) { transition: none }

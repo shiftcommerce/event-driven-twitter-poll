@@ -4,7 +4,7 @@ end
 
 require 'twitter'
 require 'oj'
-require_relative '../lib/tweet_handler'
+require_relative '../lib/event_stream'
 
 client = Twitter::Streaming::Client.new do |config|
   config.consumer_key        = ENV.fetch('TWITTER_CONSUMER_KEY')
@@ -14,7 +14,13 @@ client = Twitter::Streaming::Client.new do |config|
 end
 
 client.filter(track: ENV.fetch('TWITTER_STREAM_SEARCH_TERM')) do |object|
+
   if object.is_a?(Twitter::Tweet)
-    TweetHandler.call(object)
+    EventStream.produce({
+      tweet_id:    object.id,
+      screen_name: object.user.screen_name,
+      text:        object.text
+    }, topic: 'tweets')
   end
+
 end

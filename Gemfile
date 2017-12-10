@@ -24,8 +24,13 @@ gem 'rack-ssl'
 # a concurrent Ruby webserver
 gem 'puma'
 
-# Memcached library for persisting votes
-gem 'dalli'
+# ActiveRecord ORM and PostgreSQL for persisting votes
+gem 'activerecord'
+gem 'standalone_migrations'
+gem 'pg'
 
 # load .env locally in development
 gem 'dotenv', group: :development
+
+# Kafka event stream library
+gem 'ruby-kafka', '0.5.1'

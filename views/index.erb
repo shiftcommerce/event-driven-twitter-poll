@@ -1,47 +1,59 @@
 <!doctype html>
 <html>
 <head>
+  <meta charset='utf-8' />
+  <meta name='viewport' content='width=device-width,initial-scale=1.0' />
+
   <title>Event-driven Twitter Poll</title>
+
+  <link rel='stylesheet' href='/style.css' />
 </head>
 
 <body>
-  <h1>
-    Votes:
-    <% vote_terms.each do |term, current_value| %>
-      <span data-vote-for='<%= term.downcase %>'><%= current_value %></span>
-      for <%= term %>
-    <% end %>
-  </h1>
+  <div class='o-wrapper'>
+    <div class='c-navbar'>
+      Live Twitter Poll
+    </div>
 
-  <div id='votes'></div>
+    <div class='c-instructions'>
+      Tweet <span class='c-instructions__highlight'><%= term %></span>
+      with a message containing <%= candidate_keys.map { |k|
+        "'<span class='c-instructions__highlight'>#{k}</span>'"
+      }.join(' or ') %>
+    </div>
 
-  <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
-  <script>
-    // create a Pusher configuration
-    var pusher = new Pusher('<%= pusher_key %>', {
-      cluster: 'eu',
-      encrypted: true
-    });
+    <div class='c-results'>
+      <% candidate_keys.each_with_index do |key, index| %>
+        <div class='c-results__label c-results__label--<%= index %>'>
+          <%= key %>
+          (<span class='js-vote-count' data-candidate='<%= key.downcase %>'><%= Candidate.votes_for(key.downcase) %></span>)
+        </div>
+      <% end %>
 
-    // connect to the `votes` channel
-    var channel = pusher.subscribe('votes');
+      <svg viewBox='0 0 100 100' class='c-results__chart c-pie-chart'>
+        <circle r='25' cx='50' cy='50' fill='none' style='stroke-width:50'
+          class='c-pie-chart__slice js-pie-slice'
+        />
+      </svg>
+    </div>
 
-    // when we receive a vote
-    channel.bind('vote', function handleMessage(value) {
-      // update the counter
-      var counter = document.querySelector(`[data-vote-for='${value.vote_for.toLowerCase()}']`);
-      if (counter) counter.innerHTML = value.absolute;
+    <div class='c-footer'>
+      <div class='c-vote-ticker js-tweet-ticker'>
+        <template>
+          <div class='c-vote-ticker__tweet'>
+            @<span data-content='screen_name'></span>:
+            <span data-content='text'></span>
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>
 
-      // add the message
-      var votes_display = document.getElementById('votes');
-      var vote_element = document.createElement('p');
-      vote_element.innerHTML = `<p>
-        @${value.screen_name} voted for ${value.vote_for} with message:<br />
-        <em>${value.text}</em>
-      </p>`;
-      votes_display.appendChild(vote_element);
-    });
+  <script type='application/json' id='currentResults'>
+    <%= candidates.each_with_object({}) { |c,h| h[c.key] = c.vote_count }.to_json %>
   </script>
+  <script src="https://js.pusher.com/4.1/pusher.min.js" data-pusher-key="<%= pusher_key %>"></script>
+  <script src="/app.js"></script>
 </body>
 
 </html>

@@ -69,7 +69,7 @@
       "plan": "pusher:sandbox"
     },
     {
-      "plan": "memcachedcloud:30"
+      "plan": "heroku-postgresql:hobby-dev"
     }
   ]
 }
