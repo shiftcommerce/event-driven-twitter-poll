@@ -11,6 +11,16 @@ require_relative 'config/active_record'
 
 StandaloneMigrations::Tasks.load_tasks
 
+desc "Reset the entire system"
+task :reset do
+  require_relative 'models/candidate'
+  require_relative 'models/archived_message'
+  # reset the candidates
+  Candidate.delete_all
+  # reset the archived messages
+  ArchivedMessage.delete_all
+end
+
 desc "Replay the stream"
 task :replay do
 
