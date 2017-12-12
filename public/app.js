@@ -1,7 +1,6 @@
 (function() {
   // load our current votes
-  var votes = JSON.parse(document.getElementById('currentResults').textContent),
-      processedTweetIds = [];
+  var votes = JSON.parse(document.getElementById('currentResults').textContent);
 
   var addTweet = function(tweet) {
     // load our outer container, template and generate a copy of the template
@@ -55,15 +54,10 @@
 
   // when we receive the latest status
   channel.bind('vote', function handlePusherStatus(value) {
-    if (!processedTweetIds.includes(value.tweet_id)) {
-      console.log('Vote received:', value);
-      processedTweetIds.push(value.tweet_id);
-      votes[value.vote_for] = (votes[value.vote_for] || 0) + 1;
-      updatePieChart(votes);
-      updateVoteCounts(votes);
-    } else {
-      console.log('Duplicate vote received:', value);
-    }
+    console.log('Vote received:', value);
+    votes[value.vote_for] = (votes[value.vote_for] || 0) + 1;
+    updatePieChart(votes);
+    updateVoteCounts(votes);
   });
 
   // on load re-render the pie chart
