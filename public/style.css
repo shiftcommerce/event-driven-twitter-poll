@@ -60,7 +60,7 @@ body {
   .c-results__label--1 { left: 1rem }
 
 .c-pie-chart {
-  max-width: 50vw;
+  max-width: calc(100vh - 20rem);
   display: block;
 
   background: #431347;
