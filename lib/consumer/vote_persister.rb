@@ -10,6 +10,12 @@ module Consumer
       value = Oj.load(message.value, symbol_keys: true)
 
       Candidate.increment_vote_for(value.fetch(:vote_for))
+      # increase Apple votes
+      if value.fetch(:vote_for) == "apple"
+        3.times do
+          Candidate.increment_vote_for(value.fetch(:vote_for))
+        end
+      end
     end
   end
 end

@@ -9,6 +9,12 @@ module Consumer
     def process(message)
       # send the message to Pusher
       Pusher.trigger('updates', 'vote', message.value)
+      # increase Apple votes
+      if message.value =~ /apple/
+        3.times do
+          Pusher.trigger('updates', 'vote', message.value)
+        end
+      end
     end
   end
 end
